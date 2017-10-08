@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 app.use(morgan('dev'));
 /*app.use(app.router);*/
 
-var phoneApi = require("./app/routes/phoneRoute");
+var phoneApi = require("./app/routes/phoneRoute")(app, express);
 
 app.use('/api', phoneApi);
 

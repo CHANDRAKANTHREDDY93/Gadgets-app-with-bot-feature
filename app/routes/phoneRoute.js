@@ -1,17 +1,17 @@
 
 var Phone = require("./../schemas/phone");
-var config = require("./../config");
 
-var secretKey = config.secretKey;
+//var config = require("./../config");//
+
 
 module.exports=function(app, express)
 {
-	//var api = express.Router();//
+	var api = express.Router();
 
 
 
-	app.post("/phone", function(req, res){
-		var phone = new phone({
+	api.post("/phone", function(req, res){
+		var phone = new Phone({
 			phId : req.body.phId,
 			image: req.body.image,
 			brand: req.body.brand,
@@ -32,13 +32,40 @@ module.exports=function(app, express)
 		});
 
 
-		phone.save(function(err){
+		phone.save(function(err){					//mongoose save function
 			if(err)
 			{
 				res.send(err);
 			}
-			res.json({"message": "success"});
+			res.json({"message": "success"});		//response printed in postman
 		})
 	});
 
+
+
+	//phone get api to get all the phones from database
+
+	api.get("/getPhones", function(req, res){
+		Phone.find({}, function(err, users){
+			if(err)
+			{
+				res.send(err);
+			}
+			res.send(users);
+		});
+	});	
+
+	//phone get api to get particular phone from database
+
+	api.post("/getMyPhone", function(req, res){
+		Phone.findOne({_id: req.body._id}, function(err, user){
+			if(err)
+			{
+				res.send(err);
+			}
+			res.send(user);
+		});
+	});	
+
+	return api
 }
