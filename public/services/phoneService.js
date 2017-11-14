@@ -2,11 +2,31 @@ var app = angular.module("gadgets");
 
 app.service("phoneService", function($http){
 	this.getPhones = function(){
-		$http.get('/api/getPhones').then(function(res){
-			console.log(res);
-			return res.data;
 
+			var response;
+			return $http.get('./api/getPhones');
+
+	}
+
+	var cartList = [];
+
+	this.setCart = function(obj)
+	{
+		cartList.push(obj);
+	}
+
+	this.getCart = function()
+	{
+		return cartList;
+	}
+
+	this.deleteCartItem = function(item)
+	{
+		cartList.forEach(function(cart , index){
+			if(cart.phId === item.phId)
+			{
+				cartList.splice(index, 1);
+			}
 		});
-
 	}
 });

@@ -14,6 +14,10 @@ app.config(function($routeProvider){
 			templateUrl : "./public/views/accessories.html",
 			controller: "accController"
 		})
+		.when('/cart',{
+			templateUrl : "./public/views/cart.html",
+			controller: "cartController"
+		})
 		.otherwise
 		({
 			redirectTo : "./public/views/home.html"
